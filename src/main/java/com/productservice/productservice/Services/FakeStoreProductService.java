@@ -3,10 +3,15 @@ package com.productservice.productservice.Services;
 import com.productservice.productservice.Dtos.FakeProductDto;
 import com.productservice.productservice.Dtos.GenericProductDto;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
+import org.yaml.snakeyaml.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,13 +82,24 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public void deleteProductById() {
+    public GenericProductDto deleteProductById(Long id) {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        RequestCallback requestCallback = restTemplate.acceptHeaderRequestCallback(FakeProductDto.class);
+        ResponseExtractor<ResponseEntity<FakeProductDto>> responseExtractor = restTemplate.responseEntityExtractor(FakeProductDto.class);
+        ResponseEntity<FakeProductDto> responseEntity =  restTemplate.execute(getProductUrl, HttpMethod.DELETE, requestCallback, responseExtractor, id);
+
+        return convertToGenericDto(responseEntity.getBody());
 
     }
 
     @Override
-    public void updateProductById() {
+    public GenericProductDto updateProductById(Long id,GenericProductDto genericProductDtos) {
+        RestTemplate restTemplate = restTemplateBuilder.build();
 
+
+       FakeProductDto fakeProductDtos =  restTemplate.patchForObject(getProductUrl,genericProductDtos,FakeProductDto.class,id);
+
+       return convertToGenericDto(Objects.requireNonNull(new ResponseEntity<>(fakeProductDtos, HttpStatus.OK).getBody()));
     }
 
 
