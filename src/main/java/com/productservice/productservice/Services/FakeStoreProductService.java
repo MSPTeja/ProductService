@@ -7,6 +7,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RequestCallback;
@@ -22,7 +23,7 @@ import java.util.Objects;
 public class FakeStoreProductService implements ProductService{
 
     private RestTemplateBuilder restTemplateBuilder;
-    private final String getProductUrl = "https://fakestoreapi.com/products/{id}";
+    private final String getProductUrl = "http://fakestoreapi.com/products/{id}";
     private final String getProductUrl1 = "https://fakestoreapi.com/products/";
 
 
@@ -101,7 +102,7 @@ public class FakeStoreProductService implements ProductService{
     @Override
     public GenericProductDto updateProductById(Long id,GenericProductDto genericProductDtos) {
         RestTemplate restTemplate = restTemplateBuilder.build();
-
+//        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
        FakeProductDto fakeProductDtos =  restTemplate.patchForObject(getProductUrl,genericProductDtos,FakeProductDto.class,id);
 
