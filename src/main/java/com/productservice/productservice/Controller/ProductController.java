@@ -16,9 +16,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    @Autowired
+
 //    @Qualifier("name")
     private ProductService productService;
+    ProductController(@Qualifier("fakeStoreProductService") ProductService productService)
+    {
+        this.productService = productService;
+    }
     //constructor Injection
 //    ProductController(ProductService productService)
 //    {

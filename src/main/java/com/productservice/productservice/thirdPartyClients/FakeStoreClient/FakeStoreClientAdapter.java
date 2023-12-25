@@ -3,6 +3,7 @@ package com.productservice.productservice.thirdPartyClients.FakeStoreClient;
 import com.productservice.productservice.Dtos.FakeProductDto;
 import com.productservice.productservice.Dtos.GenericProductDto;
 import com.productservice.productservice.Exceptions.ProductNotFoundException;
+import lombok.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class FakeStoreClientAdapter {
     FakeStoreClientAdapter(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplateBuilder = restTemplateBuilder;
     }
+
 
     public FakeProductDto getProductById(Long id) throws ProductNotFoundException {
         //Integrate the FakeStore API.
