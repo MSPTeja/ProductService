@@ -6,7 +6,7 @@ import com.productservice.productservice.Services.ProductService;
 import com.productservice.productservice.Dtos.FakeProductDto;
 import com.productservice.productservice.Dtos.GenericProductDto;
 import com.productservice.productservice.Exceptions.ProductNotFoundException;
-import com.productservice.productservice.thirdPartyClients.FakeStoreClient.FakeStoreClientAdapter;
+import com.productservice.productservice.thirdPartyClients.FakeStoreClient.FakeStoreClient;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,8 @@ import java.util.List;
 
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
-    private FakeStoreClientAdapter fakeStoreAdapter;
-    FakeStoreProductService(FakeStoreClientAdapter fakeStoreAdapter) {
+    private FakeStoreClient fakeStoreAdapter;
+    FakeStoreProductService(FakeStoreClient fakeStoreAdapter) {
         this.fakeStoreAdapter = fakeStoreAdapter;
     }
     private static GenericProductDto convertToGenericProductDto(FakeProductDto fakeStoreProductDto) {
