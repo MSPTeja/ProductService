@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
-    private FakeStoreClient fakeStoreAdapter;
+    private final FakeStoreClient fakeStoreAdapter;
     FakeStoreProductService(FakeStoreClient fakeStoreAdapter) {
         this.fakeStoreAdapter = fakeStoreAdapter;
     }

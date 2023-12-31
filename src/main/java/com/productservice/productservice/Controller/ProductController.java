@@ -18,7 +18,7 @@ import java.util.List;
 public class ProductController {
 
 //    @Qualifier("name")
-    private ProductService productService;
+    private final ProductService productService;
     ProductController(@Qualifier("fakeStoreProductService") ProductService productService)
     {
         this.productService = productService;
