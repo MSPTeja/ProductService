@@ -1,36 +1,35 @@
 package com.productservice.productservice;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
-import com.productservice.productservice.Repository.CategoryRepository;
-import com.productservice.productservice.Repository.OrdersRepository;
-import com.productservice.productservice.Repository.ProductRepository;
 import com.productservice.productservice.models.Category;
 import com.productservice.productservice.models.Orders;
 import com.productservice.productservice.models.Price;
-import com.productservice.productservice.Repository.PriceRepository;
 import com.productservice.productservice.models.Product;
+import com.productservice.productservice.Repository.OrdersRepository;
+import com.productservice.productservice.Repository.PriceRepository;
+import com.productservice.productservice.Repository.CategoryRepository;
+import com.productservice.productservice.Repository.ProductRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import java.util.Optional;
+import java.util.UUID;
 @SpringBootApplication
 public class ProductServiceApplication implements CommandLineRunner  {
-
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
     private final PriceRepository priceRepository;
-    private final OrdersRepository ordersRepository;
-
+    private final OrdersRepository orderRepository;
     public ProductServiceApplication(CategoryRepository categoryRepository,
                                      ProductRepository productRepository,
                                      PriceRepository priceRepository,
-                                     OrdersRepository ordersRepository) {
+                                     OrdersRepository orderRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.priceRepository = priceRepository;
-        this.ordersRepository = ordersRepository;
+        this.orderRepository = orderRepository;
     }
-//    private MentorRepository mentorRepository;
+    //    private MentorRepository mentorRepository;
 //    private UserRepository userRepository;
 //    private StudentRepository studentRepository;
 //
@@ -41,8 +40,6 @@ public class ProductServiceApplication implements CommandLineRunner  {
 //        this.userRepository = userRepository;
 //        this.studentRepository = studentRepository;
 //    }
-
-
 //    private final MentorRepository mentorRepository;
 //    private final StudentRepository studentRepository;
 //
@@ -55,11 +52,9 @@ public class ProductServiceApplication implements CommandLineRunner  {
 //        this.studentRepository = studentRepository;
 //        this.userRepository = userRepository;
 //    }
-
     public static void main(String[] args) {
         SpringApplication.run(ProductServiceApplication.class, args);
     }
-
     @Override
     public void run(String... args) throws Exception {
 //        Mentor mentor = new Mentor();
@@ -68,8 +63,6 @@ public class ProductServiceApplication implements CommandLineRunner  {
 //        mentor.setAvgRating(4.8);
 //
 //        mentorRepository.save(mentor);
-
-
         //tpc_mentor
 //        Mentor mentor = new Mentor();
 //        mentor.setName("Deepak");
@@ -95,8 +88,6 @@ public class ProductServiceApplication implements CommandLineRunner  {
 //        for (User user1 : users) {
 //            System.out.println(user1.toString());
 //        }
-
-
 //        User user = new User();
 //        user.setName("Arshi");
 //        user.setEmail("arshi@gmail.com");
@@ -105,7 +96,7 @@ public class ProductServiceApplication implements CommandLineRunner  {
 //        Mentor mentor = new Mentor();
 //        mentor.setName("Deepak");
 //        mentor.setEmail("deepak.kasera@scaler.com");
-//        mentor.setAvg_rating(4.7);
+//        mentor.setAvgRating(4.7);
 //        mentorRepository.save(mentor);
 //
 //        Student student = new Student();
@@ -114,42 +105,44 @@ public class ProductServiceApplication implements CommandLineRunner  {
 //        student.setPsp(99.0);
 //        studentRepository.save(student);
 //        Category category = new Category();
-//        category.setName("iphone");
-//       Category savedcategory =  categoryRepository.save(category);
-
-//        Optional<Category> optionalcategory = categoryRepository.findById(UUID.fromString("182d97ae-21ed-4db5-b3ea-b0fe9bb09d5d"));
+//        category.setName("Apple Devices");
 //
-//           if(optionalcategory.isEmpty())
-//           {
-//               throw new Exception("Category was null");
-//           }
-//        Category category = optionalcategory.get();
-
+//        Category savedCategory = categoryRepository.save(category);
+//        Optional<Category> optionalCategory = categoryRepository.findById(UUID.fromString("f41ebf01-5cc5-4f4c-a8aa-6dcd149e481d"));
+//        if (optionalCategory.isEmpty()) {
+//            throw new Exception("Category was null");
+//        }
+//
+//        Category category = optionalCategory.get();
 //        Product product = new Product();
-//        product.setTitle("iphone15");
-//        product.setDescription("Best phone ever");
-//        product.setCategory(savedcategory);
-//         Product savedproduct =  productRepository.save(product);
-        // find all product with in category apple.
-//         List<Product> productList = category.getProducts();
-//         for(Product product:productList)
-//         {
-//             System.out.println(product.getTitle());
-//         }
-//             Price price = new Price();
-//             price.setCurrency("INR");
-//             price.setValue(10000);
-//             Price savedprice = priceRepository.save(price);
+//        product.setTitle("iPhone 15 pro");
+//        product.setDescription("Best iPhone ever");
+//        product.setCategory(category.get());
 //
-//             Category category = new Category();
-//             category.setName("Apple Products");
-//             Category savedcategory = categoryRepository.save(category);
-//
-//             Product product = new Product();
-//             product.setTitle("Iphoe 15pro");
-//             product.setDescription("best phone ever");
-//             product.setCategory(savedcategory);
-//             product.setPrice(savedprice);
-//          Product savedproduct  =  productRepository.save(product);
+//        Product savedProduct = productRepository.save(product);
+        //Find all the products with category = Apple Devices.
+//        List<Product> products = category.getProducts();
+//        for (Product product : products) {
+//            System.out.println(product.getTitle());
+//        }
+
+        Price price = new Price();
+        price.setCurrency("INR");
+        price.setValue(100000);
+        //Price savedPrice = priceRepository.save(price);
+
+        Category category = new Category();
+        category.setName("Apple Devices");
+        Category savedCategoy = categoryRepository.save(category);
+
+        Product product = new Product();
+        product.setTitle("iPhone 15 pro");
+        product.setDescription("Best iPhone ever");
+        product.setCategory(savedCategoy);
+        product.setPrice(price);
+
+        Product savedProduct = productRepository.save(product);
+
+        //productRepository.deleteById(UUID.fromString("4f4f6d2d-111d-4a98-8fb1-14ac807db354"));
     }
 }

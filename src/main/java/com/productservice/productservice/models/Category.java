@@ -12,7 +12,7 @@ import java.util.List;
 public class Category extends BaseModel{
 
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "category") //to avoid extra creation of table we this mappedby
     private List<Product> products;
