@@ -1,0 +1,7 @@
+
+
+ALTER TABLE Price
+    ADD value DOUBLE NULL;
+
+ALTER TABLE Price
+    MODIFY value DOUBLE NOT NULL;

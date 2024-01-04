@@ -19,10 +19,13 @@ public class ProductController {
 
 //    @Qualifier("name")
     private final ProductService productService;
-    ProductController(@Qualifier("fakeStoreProductService") ProductService productService)
-    {
-        this.productService = productService;
-    }
+//    ProductController(@Qualifier("fakeStoreProductService") ProductService productService)
+//    {
+//        this.productService = productService;
+//    }
+ProductController(ProductService productService) {
+    this.productService = productService;
+}
     //constructor Injection
 //    ProductController(ProductService productService)
 //    {
