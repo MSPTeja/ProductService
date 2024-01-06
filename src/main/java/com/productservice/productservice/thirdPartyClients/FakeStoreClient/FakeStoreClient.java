@@ -41,6 +41,7 @@ public class FakeStoreClient {
         if (fakeStoreProductDto == null) {
             //Throw an exception.
             throw new ProductNotFoundException("Product with id : " + id + " doesn't exist.");
+//            return null;
         }
         //Convert FakeStoreProductDto to GenericProductDto before returning.
         return fakeStoreProductDto;
